@@ -68,7 +68,7 @@ def bfs_search(search_problem, solution=None, node=None):
     if node.state[2] > 0:
 
         # Move 1 chicken
-        if (node.state[0] > node.state[1] or node.state[0] == 1) and node.state[0] > 0:
+        if (node.state[0] > node.state[1] or node.state[0] == 1) and node.state[0] > 0 and other_bank_state[1] <= other_bank_state[0] + 1:
             possible_new_state = (node.state[0] - 1, node.state[1], node.state[2] - 1) 
             search_problem.frontier.append(move_animals(node, possible_new_state, search_problem, solution))
 
@@ -78,12 +78,12 @@ def bfs_search(search_problem, solution=None, node=None):
             search_problem.frontier.append(move_animals(node, possible_new_state, search_problem, solution))
         
         # Move 1 fox and 1 chicken
-        if node.state[0] > 0 and node.state[1] > 0:
+        if node.state[0] > 0 and node.state[1] > 0 and other_bank_state[1] <= other_bank_state[0]:
             possible_new_state = (node.state[0] - 1, node.state[1] - 1, node.state[2] - 1)
             search_problem.frontier.append(move_animals(node, possible_new_state, search_problem, solution))
 
         # Move 2 chickens
-        if (node.state[0] - 1 > node.state[1] or node.state[0] == 2) and node.state[0] > 0:
+        if (node.state[0] - 1 > node.state[1] or node.state[0] == 2) and node.state[0] > 0 and other_bank_state[1] <= other_bank_state[0] + 2:
             possible_new_state = (node.state[0] - 2, node.state[1], node.state[2] - 1)
             search_problem.frontier.append(move_animals(node, possible_new_state, search_problem, solution))
 
@@ -95,8 +95,9 @@ def bfs_search(search_problem, solution=None, node=None):
 
     # Other bank
     if other_bank_state[2] > 0:
+
         # Move 1 chicken
-        if (other_bank_state[0] == 1 or other_bank_state[0] > other_bank_state[1]) and other_bank_state[0] > 0:
+        if (other_bank_state[0] == 1 or other_bank_state[0] > other_bank_state[1]) and other_bank_state[0] > 0 and node.state[1] <= node.state[0] + 1:
             possible_new_state = (node.state[0] + 1, node.state[1], node.state[2] + 1) 
             search_problem.frontier.append(move_animals(node, possible_new_state, search_problem, solution))
 
@@ -106,12 +107,12 @@ def bfs_search(search_problem, solution=None, node=None):
             search_problem.frontier.append(move_animals(node, possible_new_state, search_problem, solution))
         
         # Move 1 fox and 1 chicken
-        if other_bank_state[0] > 0 and other_bank_state[1] > 0:
+        if other_bank_state[0] > 0 and other_bank_state[1] > 0 and node.state[1] <= node.state[0]:
             possible_new_state = (node.state[0] + 1, node.state[1] + 1, node.state[2] + 1)
             search_problem.frontier.append(move_animals(node, possible_new_state, search_problem, solution))
 
         # Move 2 chickens
-        if (other_bank_state[0] - 1 > other_bank_state[1] or other_bank_state[0] == 2) and other_bank_state[0] > 1:
+        if (other_bank_state[0] - 1 > other_bank_state[1] or other_bank_state[0] == 2) and other_bank_state[0] > 1 and node.state[1] <= node.state[0] + 2:
             possible_new_state = (node.state[0] + 2, node.state[1], node.state[2] + 1)
             search_problem.frontier.append(move_animals(node, possible_new_state, search_problem, solution))
 
@@ -171,7 +172,7 @@ def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
     if node.state[2] > 0:
 
         # Move 1 chicken
-        if (node.state[0] > node.state[1] or node.state[0] == 1) and node.state[0] > 0:
+        if (node.state[0] > node.state[1] or node.state[0] == 1) and node.state[0] > 0 and other_bank_state[1] <= other_bank_state[0] + 1:
             possible_new_state = (node.state[0] - 1, node.state[1], node.state[2] - 1) 
             new_node = move_animals(node, possible_new_state, search_problem, solution)
             if new_node != "BadPath":
@@ -185,14 +186,14 @@ def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
                 new_frontier.append(new_node)
 
         # Move 1 fox and 1 chicken
-        if node.state[0] > 0 and node.state[1] > 0:
+        if node.state[0] > 0 and node.state[1] > 0 and other_bank_state[1] <= other_bank_state[0]:
             possible_new_state = (node.state[0] - 1, node.state[1] - 1, node.state[2] - 1)
             new_node = move_animals(node, possible_new_state, search_problem, solution)
             if new_node != "BadPath":
                 new_frontier.append(new_node)
 
         # Move 2 chickens
-        if (node.state[0] - 1 > node.state[1] or node.state[0] == 2) and node.state[0] > 0:
+        if (node.state[0] - 1 > node.state[1] or node.state[0] == 2) and node.state[0] > 0 and other_bank_state[1] <= other_bank_state[0] + 2:
             possible_new_state = (node.state[0] - 2, node.state[1], node.state[2] - 1)
             new_node = move_animals(node, possible_new_state, search_problem, solution)
             if new_node != "BadPath":
@@ -207,8 +208,9 @@ def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
 
     # Other bank
     if other_bank_state[2] > 0:
+
         # Move 1 chicken
-        if (other_bank_state[0] == 1 or other_bank_state[0] > other_bank_state[1]) and other_bank_state[0] > 0:
+        if (other_bank_state[0] == 1 or other_bank_state[0] > other_bank_state[1]) and other_bank_state[0] > 0 and node.state[1] <= node.state[0] + 1:
             possible_new_state = (node.state[0] + 1, node.state[1], node.state[2] + 1) 
             new_node = move_animals(node, possible_new_state, search_problem, solution)
             if new_node != "BadPath":
@@ -222,14 +224,14 @@ def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
                 new_frontier.append(new_node)
 
         # Move 1 fox and 1 chicken
-        if other_bank_state[0] > 0 and other_bank_state[1] > 0:
+        if other_bank_state[0] > 0 and other_bank_state[1] > 0 and node.state[1] <= node.state[0]:
             possible_new_state = (node.state[0] + 1, node.state[1] + 1, node.state[2] + 1)
             new_node = move_animals(node, possible_new_state, search_problem, solution)
             if new_node != "BadPath":
                 new_frontier.append(new_node)
 
         # Move 2 chickens
-        if (other_bank_state[0] - 1 > other_bank_state[1] or other_bank_state[0] == 2) and other_bank_state[0] > 1:
+        if (other_bank_state[0] - 1 > other_bank_state[1] or other_bank_state[0] == 2) and other_bank_state[0] > 1 and node.state[1] <= node.state[0] + 2:
             possible_new_state = (node.state[0] + 2, node.state[1], node.state[2] + 1)
             new_node = move_animals(node, possible_new_state, search_problem, solution)
             if new_node != "BadPath":
@@ -255,15 +257,17 @@ def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
     return dfs_search(search_problem, solution=solution, node=next_node)
 
 
-def ids_search(search_problem, depth_limit=100, node=None, solution=None, current_depth=0):
+def ids_search(search_problem, depth_limit=80, node=None, solution=None, current_depth=0):
 
+    if solution == None:
+        solution = SearchSolution(search_problem, "IDS")
+    solution.nodes_visited += 1
+    
     # if no node object given, create a new search from starting state
     if node == None:
         node = SearchNode(search_problem.start_state)
         node.depth = 0
         search_problem.node_dict[search_problem.start_state] = node
-        solution = SearchSolution(search_problem, "IDS")
-        solution.nodes_visited = 1
 
     new_frontier = []
     a, b, c = search_problem.start_state
@@ -290,7 +294,7 @@ def ids_search(search_problem, depth_limit=100, node=None, solution=None, curren
     if node.state[2] > 0:
 
         # Move 1 chicken
-        if (node.state[0] > node.state[1] or node.state[0] == 1) and node.state[0] > 0:
+        if (node.state[0] > node.state[1] or node.state[0] == 1) and node.state[0] > 0 and other_bank_state[1] <= other_bank_state[0] + 1:
             possible_new_state = (node.state[0] - 1, node.state[1], node.state[2] - 1) 
             new_node = move_animals(node, possible_new_state, search_problem, solution)
             if new_node != "BadPath":
@@ -304,14 +308,14 @@ def ids_search(search_problem, depth_limit=100, node=None, solution=None, curren
                 new_frontier.append(new_node)
 
         # Move 1 fox and 1 chicken
-        if node.state[0] > 0 and node.state[1] > 0:
+        if node.state[0] > 0 and node.state[1] > 0 and other_bank_state[1] <= other_bank_state[0]:
             possible_new_state = (node.state[0] - 1, node.state[1] - 1, node.state[2] - 1)
             new_node = move_animals(node, possible_new_state, search_problem, solution)
             if new_node != "BadPath":
                 new_frontier.append(new_node)
 
         # Move 2 chickens
-        if (node.state[0] - 1 > node.state[1] or node.state[0] == 2) and node.state[0] > 0:
+        if (node.state[0] - 1 > node.state[1] or node.state[0] == 2) and node.state[0] > 0 and other_bank_state[1] <= other_bank_state[0] + 2:
             possible_new_state = (node.state[0] - 2, node.state[1], node.state[2] - 1)
             new_node = move_animals(node, possible_new_state, search_problem, solution)
             if new_node != "BadPath":
@@ -327,7 +331,7 @@ def ids_search(search_problem, depth_limit=100, node=None, solution=None, curren
     # Other bank
     if other_bank_state[2] > 0:
         # Move 1 chicken
-        if (other_bank_state[0] == 1 or other_bank_state[0] > other_bank_state[1]) and other_bank_state[0] > 0:
+        if (other_bank_state[0] == 1 or other_bank_state[0] > other_bank_state[1]) and other_bank_state[0] > 0 and node.state[1] <= node.state[0] + 1:
             possible_new_state = (node.state[0] + 1, node.state[1], node.state[2] + 1) 
             new_node = move_animals(node, possible_new_state, search_problem, solution)
             if new_node != "BadPath":
@@ -341,14 +345,14 @@ def ids_search(search_problem, depth_limit=100, node=None, solution=None, curren
                 new_frontier.append(new_node)
 
         # Move 1 fox and 1 chicken
-        if other_bank_state[0] > 0 and other_bank_state[1] > 0:
+        if other_bank_state[0] > 0 and other_bank_state[1] > 0 and node.state[1] <= node.state[0]:
             possible_new_state = (node.state[0] + 1, node.state[1] + 1, node.state[2] + 1)
             new_node = move_animals(node, possible_new_state, search_problem, solution)
             if new_node != "BadPath":
                 new_frontier.append(new_node)
 
         # Move 2 chickens
-        if (other_bank_state[0] - 1 > other_bank_state[1] or other_bank_state[0] == 2) and other_bank_state[0] > 1:
+        if (other_bank_state[0] - 1 > other_bank_state[1] or other_bank_state[0] == 2) and other_bank_state[0] > 1 and node.state[1] <= node.state[0] + 2:
             possible_new_state = (node.state[0] + 2, node.state[1], node.state[2] + 1)
             new_node = move_animals(node, possible_new_state, search_problem, solution)
             if new_node != "BadPath":
@@ -383,7 +387,7 @@ def ids_search(search_problem, depth_limit=100, node=None, solution=None, curren
     while (next_node == "BadPath" or next_node.depth > depth_limit or next_node.depth >= current_depth) and len(search_problem.frontier) > 0:
         next_node = search_problem.frontier.pop(0)
     
-    solution.nodes_visited += 1
+    # solution.nodes_visited += 1
 
     if (next_node == "BadPath" or next_node.depth > depth_limit or next_node.depth >= current_depth) and len(search_problem.frontier) == 0:
         current_depth += 1
