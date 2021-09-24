@@ -69,10 +69,17 @@ For the below graph, legal states are bolded and have the letter "L" at the end,
 
 ### Implement Path-Checking Depth-First Search
 
-Below is a graph that produces a significantly worse run-time with depth-first search than with breadth-first search. Assuming that A is the start and C is the goal , and that nodes are added to the frontier in alphabetical order, breadth-first search would look at node A, then B, than C, and finish there. However, depth-first search would look at every single node along the path starting from B before it looked at C. We can conclude from this that depth-first search is worse when there are many nodes but only a small distance to the goal. 
+The depth-first search did indeed use much less memory than the breadth-first search. However, it won't always get the optimal solution or a very quick one, as shown by the example below.
+
+Below is a graph that produces a significantly worse run-time with depth-first search than with breadth-first search. Assuming that A is the start and C is the goal , and that nodes are added to the frontier in alphabetical order, breadth-first search would look at node A, then B, than C, and finish there. However, depth-first search would look at every single node along the path starting from B before it looked at C. We can conclude from this that depth-first search is worse when there are many nodes but only a small distance to the goal or few paths to it. 
 
 ![graph (2)](https://user-images.githubusercontent.com/38114628/134617842-90f812e3-a6f7-4819-b6f1-e6c930dde892.png)
 
+Memoizing depth-first search will often be less memory-consuming than depth-first search, but it is dependent purely on the shape of the graph and the distance to the goal. With a graph like shown above, breadth-first search will overperform in both memory and time. However, in cases more suited to a depth-first search, like with a highly connected graph that has a far away goal, depth-first search will do better in both memory and time. With memoizing, there won't be the difference between memory and time we observe with path-checking dfs, as every node looked at is stored, so how long it takes for the goal to be reached is essentially the same as the memory stored.
+
 ### Iterative Deepening Search
 
+It makes much more sense to use path-checking than memoizing for ids. The benefit of breadth-first search is that no time is ever wasted looking at paths once they become longer than the optimal path, and the optimal path is always found. Without using memoizing, ids already achieves these goals, since it never looks past the optimal length path because the program would have terminated as soon as it found the first depth for which a path exists and it is complete. Thus, the additional memory consumption of memoizing makes it usually worse if that is at all a concern. It still might be faster to use memoizing in cases where the dfs keeps running into previously visited nodes, but this seems like an unlikely scenario, although I could be wrong about how frequently that comes up.
 
+### Lossy Chickens and Foxes (or You Can't Make a Chicken Nugget Without Breaking a Few Chickens)
+For a problem where some chickens' lives may be lost to appease the almighty vulpine overlords, the state would not change too much. We would simply need to add 
